@@ -5,13 +5,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
 
 ## [0.2.0] - 2025-03-19
@@ -19,12 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Introduced `meltemi_service.py` for new service functionality.
 - Added `krikri_service.py` to extend service capabilities.
 - Created `utils/weather.py` with functions for current and forecast weather retrieval.
+- Added `discord_service.py` to run the Discord bot for model inference.
 
 ### Changed
 - Modified `mistral_7b_service.py` to address function calling issues, ensuring accurate weather data retrieval.
+- Updated `mistral_7b_service.py` to clean the GPU's VRAM after inference.
+- Changed handling of non-function calling requests in `mistral_7b_service.py`.
+- Changed the path for `.env` in `weather.py` utility from relative to absolute to avoid conflicts based on inference location.
 
 ### Fixed
 - Resolved function calling issues in `mistral_7b_service.py` for both current and forecast weather functionalities.
+- Resolved issue with VRAM not being freed after model usage.
 
 ## [0.1.0] - 2025-03-17
 ### Added
