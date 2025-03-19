@@ -1,64 +1,76 @@
+import ast
+import re
+
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
-from typing import List, Dict, Any
-from utils.weather import get_current_weather
+from utils.weather import current_weather, forecast_weather
 
 model_id = "mistralai/Mistral-7B-Instruct-v0.3"
-tokenizer = None
-model = None
+tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-def init_model():
-    global tokenizer, model
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
-    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16, device_map="auto")
-    print(f"Model {model_id} initialized successfully")
+def get_current_weather(location: str, format: str):
+    """
+    Get the current weather
 
-def generate_response(messages: List[Dict[str, str]], max_new_tokens: int = 256) -> str:
-    global tokenizer, model
-    if tokenizer is None or model is None:
-        raise RuntimeError("Model not initialized. Call init_model() first.")
-    
-    prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    outputs = model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=True, temperature=0.7)
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+    Args:
+        location: The city and state, e.g. San Francisco, CA
+        format: The temperature unit to use. Infer this from the users location. (choices: ["celsius", "fahrenheit"])
+    """
+    return current_weather(location, format)
 
-def parse_function_call(response: str) -> Dict[str, Any]:
-    if "Function call:" not in response:
-        return {}
-    
-    function_call = response.split("Function call:")[1].strip()
-    function_name = function_call.split("(")[0].strip()
-    args = function_call.split("(")[1].split(")")[0].split(",")
-    args = [arg.strip().strip("'\"") for arg in args]
-    
-    return {"name": function_name, "arguments": args}
 
-def process_query(query: str) -> str:
-    messages = [
-        {"role": "system", "content": "You are an AI assistant capable of answering questions and calling functions when necessary. Available functions: get_current_weather(location: str, unit: str = 'celsius')"},
-        {"role": "user", "content": query}
+def get_forecast_weather(location: str, days: int, format: str):
+    """
+    Get the weather forecast for the next 'days' days
+
+    Args:
+        location: The city and state, e.g. San Francisco, CA
+        days: The number of days to forecast
+        format: The temperature unit to use. Infer this from the users location. (choices: ["celsius", "fahrenheit"])
+    """
+    return forecast_weather(location, days, format)
+
+
+def ask_model(user_input: str):
+    conversation = [
+        {"role": "system", "content": "You are an AI assistant capable of answering questions and calling functions when necessary. Available functions: get_current_weather(location: str, format: str = 'celsius')"},
+        {"role": "user", "content": user_input}
     ]
-    response = generate_response(messages)
-    
-    function_call = parse_function_call(response)
-    if function_call:
-        if function_call["name"] == "get_current_weather":
-            weather_info = get_current_weather(*function_call["arguments"])
-            messages.append({"role": "assistant", "content": response})
-            messages.append({"role": "function", "name": "get_current_weather", "content": weather_info})
-            final_response = generate_response(messages)
-            return final_response
-    
-    return response
+    tools = [get_current_weather, get_forecast_weather]
 
-if __name__ == "__main__":
-    init_model()
-    
-    print("Regular query:")
-    print(process_query("Tell me a joke about pirates"))
-    
-    print("\nFunction calling query:")
-    print(process_query("What's the weather like in London?"))
-    
-    print(f"\nUsing model: {model_id}")
+    inputs = tokenizer.apply_chat_template(
+                conversation,
+                tools=tools,
+                add_generation_prompt=True,
+                return_dict=True,
+                return_tensors="pt",
+    )
+
+    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16, device_map="auto")
+
+    inputs.to(model.device)
+    outputs = model.generate(**inputs, max_new_tokens=1000)
+    answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+    arrays = re.findall(r'\[.*?]', answer)
+
+    if arrays:
+        last_array = ast.literal_eval(arrays[-1])
+
+        if isinstance(last_array, list) and last_array:
+            last_dict = last_array[0]
+            if isinstance(last_dict, dict) and last_dict.get('name') == 'get_current_weather':
+                location = last_dict['arguments']['location']
+                format = last_dict['arguments'].get('format', 'celsius')
+                print(get_current_weather(location, format))
+            elif isinstance(last_array, list) and last_dict.get('name') == 'get_forecast_weather':
+                location = last_dict['arguments']['location']
+                days = last_dict['arguments']['days']
+                format = last_dict['arguments'].get('format', 'celsius')
+                print(get_forecast_weather(location, days, format))
+    else:
+        print("No array found in the response.")
+
+
+if __name__ == '__main__':
+    ask_model("What's will the weather be in thessaloniki the next 2 days?")
