@@ -1,6 +1,11 @@
 import discord
 from discord.ext import commands
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv('/home/grundy/PycharmProjects/diplo/.env')
+discord_bot_token = os.getenv('DISCORD_BOT_TOKEN')
 
 intents = discord.Intents.default()
 intents.message_content = True  # Enable the intent to read message content
@@ -20,4 +25,4 @@ async def test(ctx, *, text: str):
     result = response.json()
     await ctx.send(result)
 
-bot.run('MTM1MTkxNzA2MDA1MzI3NDYzNA.GwJxjL.-SpkQmVebziX1fYNSV-h5PdolSVkMVu4W13OPU')
+bot.run(discord_bot_token)
