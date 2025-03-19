@@ -5,9 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
 
+## [0.2.0] - 2025-03-19
 ### Added
+- Introduced `meltemi_service.py` for new service functionality.
+- Added `krikri_service.py` to extend service capabilities.
+- Created `utils/weather.py` with functions for current and forecast weather retrieval.
+
+### Changed
+- Modified `mistral_7b_service.py` to address function calling issues, ensuring accurate weather data retrieval.
+
+### Fixed
+- Resolved function calling issues in `mistral_7b_service.py` for both current and forecast weather functionalities.
+
+## [0.1.0] - 2025-03-17
+### Added
+- Initial project setup
 - Implemented Llama 3.1-8B-Instruct model integration
 - Implemented Mistral 7B model integration
 - Added function calling capabilities to both models
@@ -27,7 +48,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Resolved issues with loading local model files for Llama
 - Corrected typo in mistral_7b_service.py file
-
-## [0.1.0] - 2023-XX-XX
-### Added
-- Initial project setup
