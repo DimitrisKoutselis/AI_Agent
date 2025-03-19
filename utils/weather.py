@@ -2,11 +2,10 @@ import requests
 import os
 from dotenv import load_dotenv
 
-load_dotenv('../.env')
-api_key = os.getenv('WEATHER_API_KEY')
-
 
 def current_weather(location: str, unit: str = "celsius") -> str:
+    load_dotenv('/home/grundy/PycharmProjects/diplo/.env')
+    api_key = os.getenv('WEATHER_API_KEY')
     if not api_key:
         return "Error: WEATHER_API_KEY not found in environment variables"
 
@@ -57,6 +56,9 @@ UV index: {uv}
 
 
 def forecast_weather(location: str, days, unit: str = 'celsius'):
+    load_dotenv('/home/grundy/PycharmProjects/diplo/.env')
+    api_key = os.getenv('WEATHER_API_KEY')
+
     if not api_key:
         return "Error: WEATHER_API_KEY not found in environment variables"
 

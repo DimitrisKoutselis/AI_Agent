@@ -1,4 +1,5 @@
 import ast
+import gc
 import re
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -57,18 +58,31 @@ def ask_model(user_input: str):
     if arrays:
         last_array = ast.literal_eval(arrays[-1])
 
-        if isinstance(last_array, list) and last_array:
-            last_dict = last_array[0]
-            if isinstance(last_dict, dict) and last_dict.get('name') == 'get_current_weather':
-                location = last_dict['arguments']['location']
-                format = last_dict['arguments'].get('format', 'celsius')
-                print(get_current_weather(location, format))
-            elif isinstance(last_array, list) and last_dict.get('name') == 'get_forecast_weather':
-                location = last_dict['arguments']['location']
-                days = last_dict['arguments']['days']
-                format = last_dict['arguments'].get('format', 'celsius')
-                print(get_forecast_weather(location, days, format))
+        try:
+            if isinstance(last_array, list) and last_array:
+                last_dict = last_array[0]
+                if isinstance(last_dict, dict) and last_dict.get('name') == 'get_current_weather':
+                    location = last_dict['arguments']['location']
+                    format = last_dict['arguments'].get('format', 'celsius')
+                    del model
+                    gc.collect()
+                    torch.cuda.empty_cache()
+                    return get_current_weather(location, format)
+                elif isinstance(last_array, list) and last_dict.get('name') == 'get_forecast_weather':
+                    location = last_dict['arguments']['location']
+                    days = last_dict['arguments']['days']
+                    format = last_dict['arguments'].get('format', 'celsius')
+                    del model
+                    gc.collect()
+                    torch.cuda.empty_cache()
+                    return get_forecast_weather(location, days, format)
+        except Exception as e:
+            del model
+            gc.collect()
+            torch.cuda.empty_cache()
+            return arrays
     else:
+        del model
         print("No array found in the response.")
 
 
