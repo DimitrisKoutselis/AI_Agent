@@ -15,4 +15,8 @@ def process_query():
 
     query = data['text']
     answer = ask_model(query)
-    return jsonify(answer), 200
+    try:
+        articles = answer["articles"]
+        return jsonify(articles), 200
+    except TypeError:
+        return jsonify(answer), 200

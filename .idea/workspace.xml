@@ -4,19 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50f87fde-5ac1-4b77-a3ce-0e9a30a5bb75" name="Changes" comment="init commit">
-      <change afterPath="$PROJECT_DIR$/.idea/diplo.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_access/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
+    <list default="true" id="50f87fde-5ac1-4b77-a3ce-0e9a30a5bb75" name="Changes" comment="Added the discord_bot_token to the .env file">
+      <change afterPath="$PROJECT_DIR$/utils/football_matches.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/news.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/discord_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/discord_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/llama_3.1_8b_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/llama_3.1_8b_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/mistral_7b_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/mistral_7b_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +25,32 @@
       </list>
     </option>
   </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DimitrisKoutselis&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DimitrisKoutselis/AI_Agent.git&quot;,
+    &quot;accountId&quot;: &quot;d29928e1-272b-489c-bd16-2281d209cf0d&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -44,6 +62,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.discord_service.executor": "Run",
+    "Python.football_matches.executor": "Run",
+    "Python.llama_3.1_8b_service.executor": "Run",
+    "Python.meltemi.executor": "Run",
+    "Python.mistal_7b_service.executor": "Run",
+    "Python.mistral_7b_service.executor": "Run",
+    "Python.news.executor": "Run",
+    "Python.weather.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
@@ -56,6 +82,132 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager" selected="Python.discord_service">
+    <configuration name="discord_service" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="diplo" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/services" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/services/discord_service.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="football_matches" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="diplo" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/football_matches.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mistral_7b_service" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="diplo" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/services" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/services/mistral_7b_service.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="news" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="diplo" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/news.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="weather" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="diplo" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/weather.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.discord_service" />
+        <item itemvalue="Python.football_matches" />
+        <item itemvalue="Python.mistral_7b_service" />
+        <item itemvalue="Python.news" />
+        <item itemvalue="Python.weather" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -73,8 +225,77 @@
       <option name="presentableId" value="Default" />
       <updated>1742235281630</updated>
       <workItem from="1742235282564" duration="249000" />
-      <workItem from="1742235539563" duration="1170000" />
+      <workItem from="1742235539563" duration="8202000" />
+      <workItem from="1742320729120" duration="7111000" />
+      <workItem from="1742376470040" duration="7149000" />
+      <workItem from="1742395047100" duration="1970000" />
+      <workItem from="1742466948630" duration="14346000" />
     </task>
+    <task id="LOCAL-00001" summary="init commit">
+      <option name="closed" value="true" />
+      <created>1742236834398</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1742236834398</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updated the CHANGELOG.md">
+      <option name="closed" value="true" />
+      <created>1742244810046</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1742244810047</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added krikri_service.py and meltemi_service.py. It is an initial creation for both services that are to download the model and check that they work. Function calling not yet done for them.">
+      <option name="closed" value="true" />
+      <created>1742391794808</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1742391794808</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added the weather.py util to get the current weather and the forecast weather.&#10;&#10;Updated the mistral_7b_service.py to succesfully call the functions to get the weather.">
+      <option name="closed" value="true" />
+      <created>1742391849187</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1742391849187</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated the CHANGELOGS.md">
+      <option name="closed" value="true" />
+      <created>1742391865638</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742391865638</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added the discord_service.py to inference the llms through discord.">
+      <option name="closed" value="true" />
+      <created>1742396459839</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1742396459839</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added process query on the api to take the requests from discord and call the llms.&#10;Changed part of code of mistral_7b_service.py to better handle non-function calling calls.&#10;Changed code that gets the weather api key from relative path to absolute.">
+      <option name="closed" value="true" />
+      <created>1742396582090</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1742396582090</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added the discord_bot_token to the .env file">
+      <option name="closed" value="true" />
+      <created>1742396907864</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1742396907864</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -82,6 +303,23 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="init commit" />
+    <MESSAGE value="Updated the CHANGELOG.md" />
+    <MESSAGE value="Added krikri_service.py and meltemi_service.py. It is an initial creation for both services that are to download the model and check that they work. Function calling not yet done for them." />
+    <MESSAGE value="Added the weather.py util to get the current weather and the forecast weather.&#10;&#10;Updated the mistral_7b_service.py to succesfully call the functions to get the weather." />
+    <MESSAGE value="Updated the CHANGELOGS.md" />
+    <MESSAGE value="Added the discord_service.py to inference the llms through discord." />
+    <MESSAGE value="Added process query on the api to take the requests from discord and call the llms.&#10;Changed part of code of mistral_7b_service.py to better handle non-function calling calls.&#10;Changed code that gets the weather api key from relative path to absolute." />
+    <MESSAGE value="Added the discord_bot_token to the .env file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the discord_bot_token to the .env file" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/diplo$weather.coverage" NAME="weather Coverage Results" MODIFIED="1742395440081" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/diplo$meltemi.coverage" NAME="meltemi Coverage Results" MODIFIED="1742323124305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/diplo$llama_3_1_8b_service.coverage" NAME="llama_3.1_8b_service Coverage Results" MODIFIED="1742325403972" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/diplo$mistal_7b_service.coverage" NAME="mistal_7b_service Coverage Results" MODIFIED="1742239695328" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/diplo$mistral_7b_service.coverage" NAME="mistral_7b_service Coverage Results" MODIFIED="1742471725041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/diplo$discord_service.coverage" NAME="discord_service Coverage Results" MODIFIED="1742481820758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/services" />
+    <SUITE FILE_PATH="coverage/diplo$news.coverage" NAME="news Coverage Results" MODIFIED="1742468272577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/diplo$football_matches.coverage" NAME="football_matches Coverage Results" MODIFIED="1742479374422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>
 </project>

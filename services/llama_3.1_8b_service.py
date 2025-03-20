@@ -1,10 +1,8 @@
 import requests
 import json
 from typing import List, Dict, Any
-# Add this import at the top of the file
-from utils.weather import get_current_weather
+from utils.weather import current_weather
 
-# Remove the get_current_weather function from this file
 
 model_name = "llama3.1"
 api_url = "http://localhost:11434/api/generate"

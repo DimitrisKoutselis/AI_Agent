@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+# Changelog
+
+## [0.3.0] - 2025-03-20
+
+### Added
+- Created a new utility `news.py` with functions `get_news_by_keywords` and `get_top_news` to fetch articles from major news sites and blogs.
+- Integrated the new news functions as tools in `mistral_7b_service.py` for the model to call.
+- Added a new utility for fetching football match updates (currently not working and needs further development).
+
+### Changed
+- Modified `discord_service.py` to handle the different format of the news API responses.
+- Updated `app.py` to accommodate changes related to the news API format.
+- Made a minor change to the import statements in `llama_3.1_8b_service.py`.
+
+### Known Issues
+- The football matches utility is not functioning as expected and requires further work.
 
 ## [0.2.0] - 2025-03-19
 ### Added
