@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 # Changelog
 
+## [0.4.0] - 2025-03-22
+
+### Added
+- Implemented web scraping functionality for iee.ihu.gr to gather important information for RAG (Retrieval-Augmented Generation).
+- Installed and initialized ChromaDB for storing embeddings of scraped information.
+- Created a repository for ChromaDB integration (`chromadb_repo.py`).
+- Implemented document embedding generation using the HIT-TMG/KaLM-embedding-multilingual-mini-v1 model.
+- Added an inference function in the ChromaDB repository to retrieve similar documents from the database.
+- Created a utility (`pdf_to_txt.py`) to convert PDF files to TXT format.
+
+### Changed
+- Updated the project structure to include new modules for web scraping and document processing.
+- Modified the data processing pipeline to include the conversion of scraped data into embeddings.
+
 ## [0.3.0] - 2025-03-20
 
 ### Added
