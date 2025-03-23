@@ -82,5 +82,5 @@ def get_similar_documents(query, n=1):
 
 
 if __name__ == '__main__':
-    add_documents('../data/txts')
+    #add_documents('../data/txts')
     print(get_similar_documents('What is the Email of Mr. Goulianas?'))

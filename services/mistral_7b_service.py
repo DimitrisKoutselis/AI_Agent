@@ -10,6 +10,7 @@ import torch
 from utils.weather import current_weather, forecast_weather
 from utils.news import get_top_news, get_news_by_keywords, format_news_response
 
+
 model_id = "mistralai/Mistral-7B-Instruct-v0.3"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
@@ -59,9 +60,18 @@ def get_articles_by_keywords(keywords: str, language: str = "en"):
 
 
 def ask_model(user_input: str):
+
     conversation = [
-        {"role": "system", "content": "You are an AI assistant capable of answering questions and calling functions when necessary. Available functions: get_current_weather(location: str, format: str = 'celsius'), get_forecast_weather(location: str, days: int, format: str = 'celsius'), get_top_articles(country: str = 'us', category: str = 'general'), get_articles_by_keywords(keywords: str, language: str = 'en')"},
-        {"role": "user", "content": user_input}
+        {"role": "system", 
+         "content": "You are an AI assistant capable of answering questions and calling functions when necessary."
+                    "Do not suggest how to call a funciton, call it yourself."
+                    "Available functions: "
+                    "get_current_weather(location: str, unit: str = 'celsius'), "
+                    "get_forecast_weather(location: str, days: int, unit: str = 'celsius'), "
+                    "get_top_articles(country: str = 'us', category: str = 'general'), "
+                    "get_articles_by_keywords(keywords: str, language: str = 'en'), "
+                    },
+        {"role": "user", "content": f'{user_input}!@#$%'}
     ]
     tools = [get_current_weather, get_forecast_weather, get_top_articles, get_articles_by_keywords]
 
@@ -79,11 +89,63 @@ def ask_model(user_input: str):
     outputs = model.generate(**inputs, max_new_tokens=1000)
     answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
+    function_call_match = re.search(r'```(.*?)```', answer, re.DOTALL)
+    if function_call_match:
+        function_call = function_call_match.group(1).strip()
+        try:
+            # Parse the function call
+            func_name, args_str = function_call.split('(', 1)
+            func_name = func_name.strip()
+            args_str = args_str.rsplit(')', 1)[0]
+            
+            # Parse arguments more safely
+            args = []
+            in_quotes = False
+            current_arg = ''
+            for char in args_str:
+                if char == "'" and not in_quotes:
+                    in_quotes = True
+                elif char == "'" and in_quotes:
+                    in_quotes = False
+                    args.append(current_arg)
+                    current_arg = ''
+                elif char == ',' and not in_quotes:
+                    if current_arg:
+                        args.append(current_arg.strip())
+                        current_arg = ''
+                else:
+                    current_arg += char
+            if current_arg:
+                args.append(current_arg.strip())
+
+            # Convert numeric arguments to integers
+            args = [int(arg) if arg.isdigit() else arg for arg in args]
+
+            if func_name == 'get_current_weather':
+                result = get_current_weather(*args)
+            elif func_name == 'get_forecast_weather':
+                print(args)
+                result = get_forecast_weather(*args)
+            elif func_name == 'get_top_articles':
+                result = get_top_articles(*args)
+            elif func_name == 'get_articles_by_keywords':
+                result = get_articles_by_keywords(*args)
+            else:
+                raise ValueError(f"Unknown function: {func_name}")
+
+            del model
+            gc.collect()
+            torch.cuda.empty_cache()
+            return result
+        except Exception as e:
+            print(f"Error executing function: {function_call}")
+            print(f"Error details: {str(e)}")
+            # Continue to the arrays parsing if function execution fails
+
     arrays = re.findall(r'\[.*?]', answer)
 
     if arrays:
         try:
-            # Ensure the string is a valid JSON-like structure
             last_array = ast.literal_eval(arrays[-1])
             if isinstance(last_array, list) and last_array:
                 last_dict = last_array[0]
@@ -119,16 +181,21 @@ def ask_model(user_input: str):
                         return "Please provide keywords."
                     return get_articles_by_keywords(keywords, language)
         except (SyntaxError, ValueError) as e:
-            print("Error parsing the model's output:", e)
-            return "Error: Unable to parse the model's response."
+            del model
+            gc.collect()
+            torch.cuda.empty_cache()
+            return answer.split("!@#$%")[-1].strip()
     else:
         del model
-        print("No array found in the response.")
-        return "No valid function call found in the response."
+        gc.collect()
+        torch.cuda.empty_cache()
+        print("No array found in the response. Returning the model's answer.")
+        return answer.split("!@#$%")[-1].strip()
+
+    del model
+    gc.collect()
+    torch.cuda.empty_cache()
+    return answer.split("!@#$%")[-1].strip()
 
 if __name__ == '__main__':
-    answer = ask_model("Give me articles with keywords: \"climate change\"")
-    try:
-        print(format_news_response(answer))
-    except Exception as e:
-        print(answer)
+    print(ask_model("What will the weather be in Thessaloniki the next 5 days i need it to be in celcius?"))

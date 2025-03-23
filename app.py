@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from services.mistral_7b_service import ask_model
+from services.rag_service import rag_inference
 
 app = Flask(__name__)
 
@@ -20,3 +21,13 @@ def process_query():
         return jsonify(articles), 200
     except TypeError:
         return jsonify(answer), 200
+
+@app.route('/rag', methods=['POST'])
+def rag_inference_endpoint():
+    data = request.get_json()
+    if 'user_input' not in data:
+        return jsonify({'error': 'Missing user_input field in request'}), 400
+
+    user_input = data['user_input']
+    response = rag_inference(user_input)
+    return jsonify({'response': response}), 200

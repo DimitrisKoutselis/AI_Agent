@@ -17,7 +17,7 @@ async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
 @bot.command()
-async def test(ctx, *, text: str):
+async def functions(ctx, *, text: str):
     response = requests.post(
         'http://127.0.0.1:8889/process_query',
         json={'text': text}
@@ -43,6 +43,16 @@ async def test(ctx, *, text: str):
 
     else:
         await ctx.send(result)
+
+@bot.command()
+async def rag(ctx, *, text: str):
+    response = requests.post(
+        'http://127.0.0.1:8889/rag',
+        json={'user_input': text}
+    )
+
+    result = response.json()
+    await ctx.send(result["response"])
 
 
 @bot.command()
