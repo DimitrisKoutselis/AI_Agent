@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 # Changelog
 
+## [0.5.0] - 2025-03-23
+
+### Added
+- Created a new `rag_service.py` that utilizes ChromaDB and Mistral 7B model for Retrieval-Augmented Generation (RAG).
+- Implemented a new RAG endpoint in the Flask API to handle RAG requests.
+- Added a new `!rag` command in the Discord service for RAG functionality.
+
+### Changed
+- Updated `mistral_7b_service.py` to improve function calling handling.
+- Modified the weather function parameter name from 'format' to 'unit' in `mistral_7b_service.py` for consistency.
+- Changed the previous inference command in Discord service from `!test` to `!functions`.
+
+### Fixed
+- Corrected parameter naming and handling in the weather function within `mistral_7b_service.py`.
+
 ## [0.4.0] - 2025-03-22
 
 ### Added
