@@ -94,7 +94,7 @@ def ask_model(user_input: str):
     model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16, device_map="auto")
 
     inputs.to(model.device)
-    outputs = model.generate(**inputs, max_new_tokens=1000)
+    outputs = model.generate(**inputs, max_new_tokens=1000, temperature=0.1, top_p=0.9)
     answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
     function_call_match = re.search(r'```(.*?)```', answer, re.DOTALL)
