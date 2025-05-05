@@ -71,6 +71,14 @@ def ask_model(user_input: str):
                     "get_top_articles(country: str = 'us', category: str = 'general'), "
                     "get_articles_by_keywords(keywords: str, language: str = 'en'), "
                     },
+        {"role": "user", "content": "What's the current weather in San Francisco?"},
+        {"role": "assistant", "content": "```get_current_weather('San Francisco', 'celsius')```"},
+        {"role": "user", "content": "What's the weather forecast for the next 5 days in Thessaloniki?"},
+        {"role": "assistant", "content": "```get_forecast_weather('Thessaloniki', 5, 'celsius')```"},
+        {"role": "user", "content": "What are the top articles about technology in the US?"},
+        {"role": "assistant", "content": "```get_articles_by_keywords('technology', 'en')```"},
+        {"role": "user", "content": "What are the news in USA?"},
+        {"role": "assistant", "content": "```get_top_articles('us', 'general')```"},
         {"role": "user", "content": f'{user_input}!@#$%'}
     ]
     tools = [get_current_weather, get_forecast_weather, get_top_articles, get_articles_by_keywords]
@@ -93,12 +101,10 @@ def ask_model(user_input: str):
     if function_call_match:
         function_call = function_call_match.group(1).strip()
         try:
-            # Parse the function call
             func_name, args_str = function_call.split('(', 1)
             func_name = func_name.strip()
             args_str = args_str.rsplit(')', 1)[0]
             
-            # Parse arguments more safely
             args = []
             in_quotes = False
             current_arg = ''
@@ -118,7 +124,6 @@ def ask_model(user_input: str):
             if current_arg:
                 args.append(current_arg.strip())
 
-            # Convert numeric arguments to integers
             args = [int(arg) if arg.isdigit() else arg for arg in args]
 
             if func_name == 'get_current_weather':
@@ -140,7 +145,6 @@ def ask_model(user_input: str):
         except Exception as e:
             print(f"Error executing function: {function_call}")
             print(f"Error details: {str(e)}")
-            # Continue to the arrays parsing if function execution fails
 
     arrays = re.findall(r'\[.*?]', answer)
 
