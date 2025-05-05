@@ -6,9 +6,9 @@ from tqdm import tqdm
 
 chroma_client = chromadb.PersistentClient(path="/home/grundy/PycharmProjects/diplo/chroma_db/storage")
 embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
-    model_name="HIT-TMG/KaLM-embedding-multilingual-mini-v1"
+    model_name="intfloat/multilingual-e5-large-instruct"
 )
-tokenizer = AutoTokenizer.from_pretrained("HIT-TMG/KaLM-embedding-multilingual-mini-v1")
+tokenizer = AutoTokenizer.from_pretrained("intfloat/multilingual-e5-large-instruct")
 
 def get_or_create_collection(name):
     try:
