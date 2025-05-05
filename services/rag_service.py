@@ -1,5 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from data_access.chromadb_repo import get_similar_documents
+from utils.translator import detect_and_translate, translate_to_language
 import torch
 import gc
 
@@ -17,6 +18,8 @@ def rag_inference(user_input: str) -> str:
 
     model_id = "mistralai/Mistral-7B-Instruct-v0.3"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+    user_input, language_code = detect_and_translate(user_input)
 
     conversation = [
         {"role": "system",
@@ -41,6 +44,9 @@ def rag_inference(user_input: str) -> str:
     gc.collect()
     torch.cuda.empty_cache()
     answer = answer.split("!@#$%")[-1].strip()
+
+    if language_code!= "en":
+        answer = translate_to_language(answer, "en")
 
     return answer
 

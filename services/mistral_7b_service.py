@@ -10,6 +10,8 @@ import torch
 from utils.weather import current_weather, forecast_weather
 from utils.news import get_top_news, get_news_by_keywords, format_news_response
 from utils.summarizer import summarize_text
+from utils.translator import detect_and_translate
+
 
 model_id = "mistralai/Mistral-7B-Instruct-v0.3"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -75,6 +77,8 @@ def get_text_summary(text: str, max_length: int = 150, min_length: int = 40):
 
 
 def ask_model(user_input: str):
+
+    user_input = detect_and_translate(user_input)
 
     conversation = [
         {"role": "system", 
