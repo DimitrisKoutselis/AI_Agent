@@ -9,7 +9,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 from utils.weather import current_weather, forecast_weather
 from utils.news import get_top_news, get_news_by_keywords, format_news_response
-
+from utils.summarizer import summarize_text
 
 model_id = "mistralai/Mistral-7B-Instruct-v0.3"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -59,6 +59,21 @@ def get_articles_by_keywords(keywords: str, language: str = "en"):
     return get_news_by_keywords(keywords, language)
 
 
+def get_text_summary(text: str, max_length: int = 150, min_length: int = 40):
+    """
+    Summarizes the provided text using BART Large CNN model.
+    
+    Args:
+        text (str): The text to summarize
+        max_length (int, optional): Maximum length of the summary. Defaults to 150.
+        min_length (int, optional): Minimum length of the summary. Defaults to 40.
+    
+    Returns:
+        str: The generated summary
+    """
+    return summarize_text(text, max_length, min_length)
+
+
 def ask_model(user_input: str):
 
     conversation = [
@@ -70,6 +85,7 @@ def ask_model(user_input: str):
                     "get_forecast_weather(location: str, days: int, unit: str = 'celsius'), "
                     "get_top_articles(country: str = 'us', category: str = 'general'), "
                     "get_articles_by_keywords(keywords: str, language: str = 'en'), "
+                    "get_text_summary(text: str, max_length: int = 150, min_length: int = 40), "
                     },
         {"role": "user", "content": "What's the current weather in San Francisco?"},
         {"role": "assistant", "content": "```get_current_weather('San Francisco', 'celsius')```"},
@@ -79,9 +95,13 @@ def ask_model(user_input: str):
         {"role": "assistant", "content": "```get_articles_by_keywords('technology', 'en')```"},
         {"role": "user", "content": "What are the news in USA?"},
         {"role": "assistant", "content": "```get_top_articles('us', 'general')```"},
+        {"role": "user", "content": "Can you summarize this text for me? Artificial intelligence (AI) is intelligence demonstrated by machines, as opposed to intelligence displayed by animals including humans. AI research has been defined as the field of study of intelligent agents, which refers to any system that perceives its environment and takes actions that maximize its chance of achieving its goals."},
+        {"role": "assistant", "content": "```get_text_summary('Artificial intelligence (AI) is intelligence demonstrated by machines, as opposed to intelligence displayed by animals including humans. AI research has been defined as the field of study of intelligent agents, which refers to any system that perceives its environment and takes actions that maximize its chance of achieving its goals.')```"},
+        {"role": "user", "content": "Summarize this text with a maximum length of 50 words: The Internet of Things (IoT) refers to the billions of physical devices around the world that are now connected to the internet, all collecting and sharing data. Thanks to the arrival of super-cheap computer chips and the ubiquity of wireless networks, it's possible to turn anything, from something as small as a pill to something as big as an aeroplane, into a part of the IoT."},
+        {"role": "assistant", "content": "```get_text_summary('The Internet of Things (IoT) refers to the billions of physical devices around the world that are now connected to the internet, all collecting and sharing data. Thanks to the arrival of super-cheap computer chips and the ubiquity of wireless networks, it's possible to turn anything, from something as small as a pill to something as big as an aeroplane, into a part of the IoT.', 50)```"},
         {"role": "user", "content": f'{user_input}!@#$%'}
     ]
-    tools = [get_current_weather, get_forecast_weather, get_top_articles, get_articles_by_keywords]
+    tools = [get_current_weather, get_forecast_weather, get_top_articles, get_articles_by_keywords, get_text_summary]
 
     inputs = tokenizer.apply_chat_template(
                 conversation,
@@ -135,6 +155,8 @@ def ask_model(user_input: str):
                 result = get_top_articles(*args)
             elif func_name == 'get_articles_by_keywords':
                 result = get_articles_by_keywords(*args)
+            elif func_name == 'get_text_summary':
+                result = get_text_summary(*args)
             else:
                 raise ValueError(f"Unknown function: {func_name}")
 
@@ -184,6 +206,14 @@ def ask_model(user_input: str):
                     if not keywords:
                         return "Please provide keywords."
                     return get_articles_by_keywords(keywords, language)
+                elif isinstance(last_dict, dict) and last_dict.get('name') == 'get_text_summary':
+                    text = last_dict['arguments']['text']
+                    max_length = last_dict['arguments'].get('max_length', 150)
+                    min_length = last_dict['arguments'].get('min_length', 40)
+                    del model
+                    gc.collect()
+                    torch.cuda.empty_cache()
+                    return get_text_summary(text, max_length, min_length)
         except (SyntaxError, ValueError) as e:
             del model
             gc.collect()
