@@ -4,11 +4,11 @@ import requests
 import os
 from dotenv import load_dotenv
 
-load_dotenv('/home/grundy/PycharmProjects/diplo/.env')
+load_dotenv('/home/dim/PycharmProjects/AI_Agent/.env')
 discord_bot_token = os.getenv('DISCORD_BOT_TOKEN')
 
 intents = discord.Intents.default()
-intents.message_content = True  # Enable the intent to read message content
+intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 

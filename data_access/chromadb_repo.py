@@ -4,17 +4,17 @@ import os
 from transformers import AutoTokenizer
 from tqdm import tqdm
 
-chroma_client = chromadb.PersistentClient(path="/home/grundy/PycharmProjects/diplo/chroma_db/storage")
+chroma_client = chromadb.PersistentClient(path="/home/dim/PycharmProjects/AI_Agent/db")
 embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
-    model_name="intfloat/multilingual-e5-large-instruct"
+    model_name="HIT-TMG/KaLM-embedding-multilingual-mini-v1"
 )
-tokenizer = AutoTokenizer.from_pretrained("intfloat/multilingual-e5-large-instruct")
+tokenizer = AutoTokenizer.from_pretrained("HIT-TMG/KaLM-embedding-multilingual-mini-v1")
 
 def get_or_create_collection(name):
     try:
         collection = chroma_client.get_collection(name=name, embedding_function=embedding_function)
         print(f"Collection '{name}' already exists")
-    except chromadb.errors.InvalidCollectionException:
+    except (chromadb.errors.InvalidDimensionException, chromadb.errors.NotFoundError):
         collection = chroma_client.create_collection(name=name, embedding_function=embedding_function)
         print(f"Collection '{name}' created successfully")
     return collection
@@ -82,5 +82,5 @@ def get_similar_documents(query, n=1):
 
 
 if __name__ == '__main__':
-    #add_documents('../data/txts')
-    print(get_similar_documents('What is the Email of Mr. Goulianas?'))
+    add_documents('../data/txts')
+    print(get_similar_documents('Πρόγραμμα μαθημάτων για το 2ο εξάμηνο'))

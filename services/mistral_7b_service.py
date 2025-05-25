@@ -66,12 +66,12 @@ def get_text_summary(text: str, max_length: int = 150, min_length: int = 40):
     Summarizes the provided text using BART Large CNN model.
     
     Args:
-        text (str): The text to summarize
-        max_length (int, optional): Maximum length of the summary. Defaults to 150.
-        min_length (int, optional): Minimum length of the summary. Defaults to 40.
+        text: The text to summarize.
+        max_length: Maximum length of the summary. Defaults to 150.
+        min_length: Minimum length of the summary. Defaults to 40.
     
     Returns:
-        str: The generated summary
+        str: The generated summary.
     """
     return summarize_text(text, max_length, min_length)
 
@@ -91,18 +91,6 @@ def ask_model(user_input: str):
                     "get_articles_by_keywords(keywords: str, language: str = 'en'), "
                     "get_text_summary(text: str, max_length: int = 150, min_length: int = 40), "
                     },
-        {"role": "user", "content": "What's the current weather in San Francisco?"},
-        {"role": "assistant", "content": "```get_current_weather('San Francisco', 'celsius')```"},
-        {"role": "user", "content": "What's the weather forecast for the next 5 days in Thessaloniki?"},
-        {"role": "assistant", "content": "```get_forecast_weather('Thessaloniki', 5, 'celsius')```"},
-        {"role": "user", "content": "What are the top articles about technology in the US?"},
-        {"role": "assistant", "content": "```get_articles_by_keywords('technology', 'en')```"},
-        {"role": "user", "content": "What are the news in USA?"},
-        {"role": "assistant", "content": "```get_top_articles('us', 'general')```"},
-        {"role": "user", "content": "Can you summarize this text for me? Artificial intelligence (AI) is intelligence demonstrated by machines, as opposed to intelligence displayed by animals including humans. AI research has been defined as the field of study of intelligent agents, which refers to any system that perceives its environment and takes actions that maximize its chance of achieving its goals."},
-        {"role": "assistant", "content": "```get_text_summary('Artificial intelligence (AI) is intelligence demonstrated by machines, as opposed to intelligence displayed by animals including humans. AI research has been defined as the field of study of intelligent agents, which refers to any system that perceives its environment and takes actions that maximize its chance of achieving its goals.')```"},
-        {"role": "user", "content": "Summarize this text with a maximum length of 50 words: The Internet of Things (IoT) refers to the billions of physical devices around the world that are now connected to the internet, all collecting and sharing data. Thanks to the arrival of super-cheap computer chips and the ubiquity of wireless networks, it's possible to turn anything, from something as small as a pill to something as big as an aeroplane, into a part of the IoT."},
-        {"role": "assistant", "content": "```get_text_summary('The Internet of Things (IoT) refers to the billions of physical devices around the world that are now connected to the internet, all collecting and sharing data. Thanks to the arrival of super-cheap computer chips and the ubiquity of wireless networks, it's possible to turn anything, from something as small as a pill to something as big as an aeroplane, into a part of the IoT.', 50)```"},
         {"role": "user", "content": f'{user_input}!@#$%'}
     ]
     tools = [get_current_weather, get_forecast_weather, get_top_articles, get_articles_by_keywords, get_text_summary]

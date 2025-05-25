@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 
 def current_weather(location: str, unit: str = "celsius") -> str:
-    load_dotenv('/home/grundy/PycharmProjects/diplo/.env')
+    load_dotenv('/home/dim/PycharmProjects/AI_Agent/.env')
     api_key = os.getenv('WEATHER_API_KEY')
     if not api_key:
         return "Error: WEATHER_API_KEY not found in environment variables"

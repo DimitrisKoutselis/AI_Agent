@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import requests
 
-load_dotenv('/home/grundy/PycharmProjects/diplo/.env')
+load_dotenv('/home/dim/PycharmProjects/AI_Agent/.env')
 api_key = os.getenv('NEWS_API_KEY')
 base_url = "https://newsapi.org/v2/"
 
