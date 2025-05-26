@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from services.mistral_7b_service import ask_model
-from services.rag_service import rag_inference
+from services.rag_service import rag_inference_azure
 
 app = Flask(__name__)
 
@@ -29,5 +29,6 @@ def rag_inference_endpoint():
         return jsonify({'error': 'Missing user_input field in request'}), 400
 
     user_input = data['user_input']
-    response = rag_inference(user_input)
+    response = rag_inference_azure(user_input)
+
     return jsonify({'response': response}), 200
